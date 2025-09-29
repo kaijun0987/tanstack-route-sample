@@ -1,0 +1,6 @@
+{
+  "routesDirectory": "./src/module",
+  "indexToken": "home",
+  "routeFileIgnorePattern": "components|data|utils|hooks",
+  "routeToken": "main"
+}
