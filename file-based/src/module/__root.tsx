@@ -1,19 +1,11 @@
-import {
-  createRootRoute,
-  createRootRouteWithContext,
-} from "@tanstack/react-router";
-import { RootLayout } from "../shared/layouts/RootLayouts";
 import { QueryClient } from "@tanstack/react-query";
-
-// export const Route = createRootRoute({
-//   component: RootLayout,
-//   errorComponent: () => {
-//     return <div>Errors</div>;
-//   },
-// });
+import { createRootRouteWithContext } from "@tanstack/react-router";
+import { RootLayout } from "../shared/layouts/RootLayouts";
+import { useAuthStore } from "../shared/store/useAuthStore";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
+  authStore: typeof useAuthStore;
 }>()({
   component: RootLayout,
   notFoundComponent: () => {

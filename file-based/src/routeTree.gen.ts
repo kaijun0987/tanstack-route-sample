@@ -11,38 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from './module/__root'
+import { Route as UserMainImport } from './module/user/main'
 import { Route as GameMainImport } from './module/game/main'
-import { Route as AboutUsMainImport } from './module/about-us/main'
-import { Route as UnauthMainImport } from './module/_unauth/main'
-import { Route as Test1MainImport } from './module/_test1/main'
 import { Route as MainImport } from './module/main'
+import { Route as UserHomeImport } from './module/user/home'
 import { Route as GamePlayerImport } from './module/game/player'
-import { Route as UnauthLoginImport } from './module/_unauth/login'
-import { Route as AboutUsIntroductionMainImport } from './module/about-us/introduction/main'
-import { Route as AboutUsAboutMainImport } from './module/about-us/about/main'
+import { Route as UserUsersIdMainImport } from './module/user/$usersId/main'
 import { Route as GameUserUserIdImport } from './module/game/user.$userId'
 
 // Create/Update Routes
 
+const UserMainRoute = UserMainImport.update({
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const GameMainRoute = GameMainImport.update({
   id: '/game',
   path: '/game',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AboutUsMainRoute = AboutUsMainImport.update({
-  id: '/about-us',
-  path: '/about-us',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const UnauthMainRoute = UnauthMainImport.update({
-  id: '/_unauth',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const Test1MainRoute = Test1MainImport.update({
-  id: '/_test1',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -52,28 +39,22 @@ const MainRoute = MainImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const UserHomeRoute = UserHomeImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UserMainRoute,
+} as any)
+
 const GamePlayerRoute = GamePlayerImport.update({
   id: '/player',
   path: '/player',
   getParentRoute: () => GameMainRoute,
 } as any)
 
-const UnauthLoginRoute = UnauthLoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => UnauthMainRoute,
-} as any)
-
-const AboutUsIntroductionMainRoute = AboutUsIntroductionMainImport.update({
-  id: '/introduction',
-  path: '/introduction',
-  getParentRoute: () => AboutUsMainRoute,
-} as any)
-
-const AboutUsAboutMainRoute = AboutUsAboutMainImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => AboutUsMainRoute,
+const UserUsersIdMainRoute = UserUsersIdMainImport.update({
+  id: '/$usersId',
+  path: '/$usersId',
+  getParentRoute: () => UserMainRoute,
 } as any)
 
 const GameUserUserIdRoute = GameUserUserIdImport.update({
@@ -93,27 +74,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainImport
       parentRoute: typeof rootRoute
     }
-    '/_test1': {
-      id: '/_test1'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof Test1MainImport
-      parentRoute: typeof rootRoute
-    }
-    '/_unauth': {
-      id: '/_unauth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof UnauthMainImport
-      parentRoute: typeof rootRoute
-    }
-    '/about-us': {
-      id: '/about-us'
-      path: '/about-us'
-      fullPath: '/about-us'
-      preLoaderRoute: typeof AboutUsMainImport
-      parentRoute: typeof rootRoute
-    }
     '/game': {
       id: '/game'
       path: '/game'
@@ -121,26 +81,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameMainImport
       parentRoute: typeof rootRoute
     }
-    '/about-us/about': {
-      id: '/about-us/about'
-      path: '/about'
-      fullPath: '/about-us/about'
-      preLoaderRoute: typeof AboutUsAboutMainImport
-      parentRoute: typeof AboutUsMainImport
+    '/user': {
+      id: '/user'
+      path: '/user'
+      fullPath: '/user'
+      preLoaderRoute: typeof UserMainImport
+      parentRoute: typeof rootRoute
     }
-    '/about-us/introduction': {
-      id: '/about-us/introduction'
-      path: '/introduction'
-      fullPath: '/about-us/introduction'
-      preLoaderRoute: typeof AboutUsIntroductionMainImport
-      parentRoute: typeof AboutUsMainImport
-    }
-    '/_unauth/login': {
-      id: '/_unauth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof UnauthLoginImport
-      parentRoute: typeof UnauthMainImport
+    '/user/$usersId': {
+      id: '/user/$usersId'
+      path: '/$usersId'
+      fullPath: '/user/$usersId'
+      preLoaderRoute: typeof UserUsersIdMainImport
+      parentRoute: typeof UserMainImport
     }
     '/game/player': {
       id: '/game/player'
@@ -148,6 +101,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/game/player'
       preLoaderRoute: typeof GamePlayerImport
       parentRoute: typeof GameMainImport
+    }
+    '/user/': {
+      id: '/user/'
+      path: '/'
+      fullPath: '/user/'
+      preLoaderRoute: typeof UserHomeImport
+      parentRoute: typeof UserMainImport
     }
     '/game/user/$userId': {
       id: '/game/user/$userId'
@@ -160,32 +120,6 @@ declare module '@tanstack/react-router' {
 }
 
 // Create and export the route tree
-
-interface UnauthMainRouteChildren {
-  UnauthLoginRoute: typeof UnauthLoginRoute
-}
-
-const UnauthMainRouteChildren: UnauthMainRouteChildren = {
-  UnauthLoginRoute: UnauthLoginRoute,
-}
-
-const UnauthMainRouteWithChildren = UnauthMainRoute._addFileChildren(
-  UnauthMainRouteChildren,
-)
-
-interface AboutUsMainRouteChildren {
-  AboutUsAboutMainRoute: typeof AboutUsAboutMainRoute
-  AboutUsIntroductionMainRoute: typeof AboutUsIntroductionMainRoute
-}
-
-const AboutUsMainRouteChildren: AboutUsMainRouteChildren = {
-  AboutUsAboutMainRoute: AboutUsAboutMainRoute,
-  AboutUsIntroductionMainRoute: AboutUsIntroductionMainRoute,
-}
-
-const AboutUsMainRouteWithChildren = AboutUsMainRoute._addFileChildren(
-  AboutUsMainRouteChildren,
-)
 
 interface GameMainRouteChildren {
   GamePlayerRoute: typeof GamePlayerRoute
@@ -201,41 +135,47 @@ const GameMainRouteWithChildren = GameMainRoute._addFileChildren(
   GameMainRouteChildren,
 )
 
+interface UserMainRouteChildren {
+  UserUsersIdMainRoute: typeof UserUsersIdMainRoute
+  UserHomeRoute: typeof UserHomeRoute
+}
+
+const UserMainRouteChildren: UserMainRouteChildren = {
+  UserUsersIdMainRoute: UserUsersIdMainRoute,
+  UserHomeRoute: UserHomeRoute,
+}
+
+const UserMainRouteWithChildren = UserMainRoute._addFileChildren(
+  UserMainRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof MainRoute
-  '': typeof UnauthMainRouteWithChildren
-  '/about-us': typeof AboutUsMainRouteWithChildren
   '/game': typeof GameMainRouteWithChildren
-  '/about-us/about': typeof AboutUsAboutMainRoute
-  '/about-us/introduction': typeof AboutUsIntroductionMainRoute
-  '/login': typeof UnauthLoginRoute
+  '/user': typeof UserMainRouteWithChildren
+  '/user/$usersId': typeof UserUsersIdMainRoute
   '/game/player': typeof GamePlayerRoute
+  '/user/': typeof UserHomeRoute
   '/game/user/$userId': typeof GameUserUserIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof MainRoute
-  '': typeof UnauthMainRouteWithChildren
-  '/about-us': typeof AboutUsMainRouteWithChildren
   '/game': typeof GameMainRouteWithChildren
-  '/about-us/about': typeof AboutUsAboutMainRoute
-  '/about-us/introduction': typeof AboutUsIntroductionMainRoute
-  '/login': typeof UnauthLoginRoute
+  '/user/$usersId': typeof UserUsersIdMainRoute
   '/game/player': typeof GamePlayerRoute
+  '/user': typeof UserHomeRoute
   '/game/user/$userId': typeof GameUserUserIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof MainRoute
-  '/_test1': typeof Test1MainRoute
-  '/_unauth': typeof UnauthMainRouteWithChildren
-  '/about-us': typeof AboutUsMainRouteWithChildren
   '/game': typeof GameMainRouteWithChildren
-  '/about-us/about': typeof AboutUsAboutMainRoute
-  '/about-us/introduction': typeof AboutUsIntroductionMainRoute
-  '/_unauth/login': typeof UnauthLoginRoute
+  '/user': typeof UserMainRouteWithChildren
+  '/user/$usersId': typeof UserUsersIdMainRoute
   '/game/player': typeof GamePlayerRoute
+  '/user/': typeof UserHomeRoute
   '/game/user/$userId': typeof GameUserUserIdRoute
 }
 
@@ -243,54 +183,42 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
-    | '/about-us'
     | '/game'
-    | '/about-us/about'
-    | '/about-us/introduction'
-    | '/login'
+    | '/user'
+    | '/user/$usersId'
     | '/game/player'
+    | '/user/'
     | '/game/user/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
-    | '/about-us'
     | '/game'
-    | '/about-us/about'
-    | '/about-us/introduction'
-    | '/login'
+    | '/user/$usersId'
     | '/game/player'
+    | '/user'
     | '/game/user/$userId'
   id:
     | '__root__'
     | '/'
-    | '/_test1'
-    | '/_unauth'
-    | '/about-us'
     | '/game'
-    | '/about-us/about'
-    | '/about-us/introduction'
-    | '/_unauth/login'
+    | '/user'
+    | '/user/$usersId'
     | '/game/player'
+    | '/user/'
     | '/game/user/$userId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   MainRoute: typeof MainRoute
-  Test1MainRoute: typeof Test1MainRoute
-  UnauthMainRoute: typeof UnauthMainRouteWithChildren
-  AboutUsMainRoute: typeof AboutUsMainRouteWithChildren
   GameMainRoute: typeof GameMainRouteWithChildren
+  UserMainRoute: typeof UserMainRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   MainRoute: MainRoute,
-  Test1MainRoute: Test1MainRoute,
-  UnauthMainRoute: UnauthMainRouteWithChildren,
-  AboutUsMainRoute: AboutUsMainRouteWithChildren,
   GameMainRoute: GameMainRouteWithChildren,
+  UserMainRoute: UserMainRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -304,30 +232,12 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_test1",
-        "/_unauth",
-        "/about-us",
-        "/game"
+        "/game",
+        "/user"
       ]
     },
     "/": {
       "filePath": "main.tsx"
-    },
-    "/_test1": {
-      "filePath": "_test1/main.tsx"
-    },
-    "/_unauth": {
-      "filePath": "_unauth/main.tsx",
-      "children": [
-        "/_unauth/login"
-      ]
-    },
-    "/about-us": {
-      "filePath": "about-us/main.tsx",
-      "children": [
-        "/about-us/about",
-        "/about-us/introduction"
-      ]
     },
     "/game": {
       "filePath": "game/main.tsx",
@@ -336,21 +246,24 @@ export const routeTree = rootRoute
         "/game/user/$userId"
       ]
     },
-    "/about-us/about": {
-      "filePath": "about-us/about/main.tsx",
-      "parent": "/about-us"
+    "/user": {
+      "filePath": "user/main.tsx",
+      "children": [
+        "/user/$usersId",
+        "/user/"
+      ]
     },
-    "/about-us/introduction": {
-      "filePath": "about-us/introduction/main.tsx",
-      "parent": "/about-us"
-    },
-    "/_unauth/login": {
-      "filePath": "_unauth/login.tsx",
-      "parent": "/_unauth"
+    "/user/$usersId": {
+      "filePath": "user/$usersId/main.tsx",
+      "parent": "/user"
     },
     "/game/player": {
       "filePath": "game/player.tsx",
       "parent": "/game"
+    },
+    "/user/": {
+      "filePath": "user/home.tsx",
+      "parent": "/user"
     },
     "/game/user/$userId": {
       "filePath": "game/user.$userId.tsx",

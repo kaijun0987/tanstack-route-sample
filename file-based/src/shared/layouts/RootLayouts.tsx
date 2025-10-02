@@ -1,13 +1,6 @@
-import {
-  Link,
-  linkOptions,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "@tanstack/react-router";
+import { Link, linkOptions, Outlet, useLocation } from "@tanstack/react-router";
 
 export const RootLayout = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const footerData = [
@@ -16,12 +9,13 @@ export const RootLayout = () => {
       title: "Home",
     }),
     linkOptions({
-      to: "/about-us/introduction",
-      title: "About us",
-    }),
-    linkOptions({
       to: "/game/player",
       title: "Game",
+    }),
+    linkOptions({
+      to: "/user",
+      title: "User",
+      search: { id: undefined },
     }),
   ];
 
@@ -31,20 +25,14 @@ export const RootLayout = () => {
         <Link to="/" hash="section-1">
           Home
         </Link>
-        <button
-          className="ml-4"
-          onClick={() => {
-            navigate({ to: "/about-us/introduction" });
-          }}
-        >
-          Abous us
-        </button>
         <Link
           to="/game/player"
           className="ml-4"
-          state={{ player: { id: "ID567", name: "Test567" } }}
-        >
+          state={{ player: { id: "ID567", name: "Test567" } }}>
           Game
+        </Link>
+        <Link to="/user" className="ml-4" search={{ id: undefined }}>
+          User
         </Link>
       </header>
 
@@ -60,8 +48,7 @@ export const RootLayout = () => {
                   ${footer.to.replace(/\//g, "@").split("@")[1] === location.pathname.replace(/\//g, "@").split("@")[1] && "text-blue-700"}`}
               key={footer.title}
               to={footer.to}
-              state={{ player: { id: "ID567", name: "Test567" } }}
-            >
+              state={{ player: { id: "ID567", name: "Test567" } }}>
               {footer.title}
             </Link>
           );

@@ -1,16 +1,12 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/game/user/$userId")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  //Local path params
+  //Local path
   const { userId } = Route.useParams();
-
-  // Global path params strict: false is required
-  // const { userId } = useParams({ strict: false });
 
   return (
     <div>

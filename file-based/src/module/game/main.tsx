@@ -12,16 +12,14 @@ function RouteComponent() {
         <Link
           className="mr-4 font-bold"
           to="/game/player"
-          state={{ player: { id: "ID567", name: "Test567" } }}
-        >
+          state={{ player: { id: "ID567", name: "Test567" } }}>
           Player
         </Link>
-        {/* search param */}
+        {/* Route param */}
         <Link
           className="font-bold"
           to="/game/user/$userId"
-          params={{ userId: "ID123" }}
-        >
+          params={{ userId: "ID123" }}>
           User
         </Link>
       </header>
